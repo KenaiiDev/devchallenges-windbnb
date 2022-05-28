@@ -260,6 +260,11 @@ body{
   align-items: center;
   font-size: 1.3rem;
   letter-spacing: 1px;
+  cursor: pointer;
+}
+
+.search-modal__recommendation:hover{
+  text-decoration: underline;
 }
 
 .search-modal__icon{
