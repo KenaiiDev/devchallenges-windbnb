@@ -1,38 +1,562 @@
-.App {
-  text-align: center;
+@charset "UTF-8";
+/* Aquí definimos las Custom properties */
+:root {
+  --negro: #393939;
+  /* Tipografía */
+  --tipo-principal: Helvetica, Arial, sans-serif;
+  --tipo-secundaria: Verdana;
 }
 
-.App-logo {
-  height: 40vmin;
-  pointer-events: none;
-}
-
-@media (prefers-reduced-motion: no-preference) {
-  .App-logo {
-    animation: App-logo-spin infinite 20s linear;
+/* Opcional */
+/* Configuramos si un usuario ha activado el modo alto contraste. (WD) */
+/* Opcional */
+/* Desactivamos los animations en el caso de que el usuario haya configurado el modo sin animation */
+@media (prefers-reduced-motion: reduce) {
+  * {
+    -webkit-animation: none !important;
+            animation: none !important;
+    -webkit-transition: none !important;
+    transition: none !important;
   }
 }
+/* Reseteamos los margin y paddings de todas las etiquetas */
+* {
+  margin: 0;
+  padding: 0;
+  border: 0;
+  -webkit-box-sizing: border-box;
+          box-sizing: border-box;
+  vertical-align: baseline;
+  transition: all .1s ease-in;
+}
 
-.App-header {
-  background-color: #282c34;
+/* Evitamos problemas con las imagenes */
+img, picture, video, iframe, figure {
+  max-width: 100%;
+  width: 100%;
+  display: block;
+}
+
+/* Reseteamos los enlaces para funcionar como cajas... */
+a {
+  display: block;
+  text-decoration: none;
+  color: inherit;
+  font-size: inherit;
+}
+
+/* ... excepto los que se encuentran en párrafos */
+p a {
+  display: inline;
+}
+
+/* Quitamos los puntos de los <li> */
+li {
+  list-style-type: none;
+}
+
+/* Configuramos anclas suaves */
+html {
+  scroll-behavior: smooth;
+}
+
+/* Desactivamos estilos por defecto de las principales etiquetas de texto */
+h1, h2, h3, h4, h5, h6, p, span, a, strong, blockquote, i, b, u, em {
+  font-size: 1em;
+  font-weight: inherit;
+  font-style: inherit;
+  text-decoration: none;
+  color: inherit;
+}
+
+/* Evitamos problemas con los pseudoelementos de quotes */
+blockquote:before, blockquote:after, q:before, q:after {
+  content: "";
+  content: none;
+}
+
+/* Configuramos el texto que seleccionamos */
+::-moz-selection {
+  background-color: var(--negro);
+  color: var(--blanco);
+}
+::selection {
+  background-color: var(--negro);
+  color: var(--blanco);
+}
+
+/* Nivelamos problemas de tipografías y colocación de formularios */
+form, input, textarea, select, button, label {
+  font-family: inherit;
+  font-size: inherit;
+  -webkit-hyphens: auto;
+      -ms-hyphens: auto;
+          hyphens: auto;
+  background-color: transparent;
+  color: inherit;
+  display: block;
+}
+
+/* Reseteamos las tablas */
+table, tr, td {
+  border-collapse: collapse;
+  border-spacing: 0;
+}
+
+/* Evitamos problemas con los SVG */
+svg {
+  width: 100%;
+  display: block;
+  fill: currentColor;
+}
+
+/* (Probándolo, no usar en producción) En el caso de añadir una  */
+/* p svg{
+  display: inline;
+  width: initial;
+} */
+/* Configuramos la tipografía para toda la web */
+body {
   min-height: 100vh;
+  font-size: 100%;
+  font-family: var(--tipo-principal);
+  color: var(--negro);
+}
+
+input:focus, textarea:focus, select:focus, button:focus {
+  outline: none;
+}
+
+body{
+  max-width: 1380px;
+  margin: 0 auto;
+}
+
+.header{
+  padding: 2%;
   display: flex;
   flex-direction: column;
+}
+
+.header__logo{
+  width: 100px;
+}
+
+.header__search{
+  margin: 10% auto;
+}
+
+.search-container{
+  min-width: 70%;
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  box-shadow: #a8a6a6 1px 1px 3px;
+  border-radius: 10px;
+}
+
+.search-container__button{
+  min-width: 20%;
+  padding: 2%;
+}
+
+.search-container__input{
+  min-width: 40%;
+  padding: 2%;
+  border-right: #a8a6a6 1px solid;
+}
+
+.search-modal{
+  background-color: #fff;
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  max-width: 1380px;
+  width: 100vw;
+  min-height: 100vh;
+  padding: 2%;
+  z-index: 1000;
+  top: -100vh;
+  transition: all .2s ease-in;
+  margin: 0 auto;
+}
+
+.is-active{
+  top: 0;
+}
+
+.search-modal__header{
+  display: flex;
+  justify-content: space-between;
+  flex-grow: 1;
+}
+
+.search-modal__title{
+  font-weight: bold;
+  font-size: 1rem;
+}
+
+.search-modal__close{
+  cursor: pointer;
+  font-size: 1.5rem;
+  transition: all .1s ease-in;
+}
+
+.search-modal__close:hover{
+  transform: scale(1.3);
+}
+
+
+.search-modal__inputs{
+  margin: 3% auto;
+  display: flex;
+  flex-direction: column;
+  border-radius: 15px;
+  border: #393939 2px solid;
+}
+
+.search-modal__input-container{
+  padding: 3% 5%;
+  display: flex;
+  flex-direction: column;
+}
+
+.search-modal__input-container:first-child{
+  border-bottom: #393939 1px solid;
+}
+
+.search-modal__input-container:last-child{
+  display: none;
+}
+
+.search-modal__label{
+  font-size: .7rem;
+  font-weight: bold;
+  text-transform: uppercase;
+  letter-spacing: -0.5pt;
+}
+
+.search-modal__input{
+  font-size: 1.2rem;
+  letter-spacing: 1px;
+  padding: 1% 0;
+}
+
+.search-modal__guests{
+  display: none;
+}
+
+.search-modal__recommendations{
+  display: flex;
+  flex-direction: column;
+  height: 60vh;
+  overflow-y: scroll;
+}
+
+.search-modal__recommendation{
+  padding: 2% 5%;
+  display: flex;
   align-items: center;
-  justify-content: center;
-  font-size: calc(10px + 2vmin);
-  color: white;
+  font-size: 1.3rem;
+  letter-spacing: 1px;
 }
 
-.App-link {
-  color: #61dafb;
+.search-modal__icon{
+  margin-right: 2%;
+  color: #eb5757;
 }
 
-@keyframes App-logo-spin {
-  from {
-    transform: rotate(0deg);
+.search-modal__button{
+  min-width: 20%;
+  padding: 2% 3%;
+  border-radius: 10px;
+  background-color: #eb5757;
+  color: #fff;
+  font-weight: bold;
+  letter-spacing: 1px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  transition: all .1s ease-in;
+  position: absolute;
+  bottom: 5%;
+  left: 50%;
+  margin-left: -10%;
+}
+
+.search-modal__button:hover{
+  background-color: #d64242;
+}
+
+.search-modal__button:active{
+  outline: none;
+  background-color: #eb5757;
+}
+
+.stays{
+  padding: 2%;
+}
+
+.stays__data{
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.stays__location{
+  font-weight: bold;
+  font-size: 2rem;
+  margin: 2% 0;
+}
+
+.stays__count{
+  font-size: 1.5rem;
+  margin: 2% 0;
+}
+
+.list{
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  align-items: center;
+  margin: 2% 0;
+}
+
+.list__item{
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  margin: 2% 0;
+}
+
+.list__img{
+  border-radius: 20px;
+  overflow: hidden;
+}
+
+.list__img img{
+  object-fit: cover;
+  width: 100%;
+  height: 288px;
+}
+
+.list__info{
+  margin: 3% 0;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.list__superhost{
+  border-radius: 20px;
+  border: #393939 2px solid;
+  padding: 2%;
+  font-weight: bold;
+}
+
+.list__rate{
+  display: flex;
+  align-items: center;
+}
+
+.list__star{
+  color: #eb5757;
+}
+
+.list__description{
+  font-size: 1.3rem;
+  font-weight: bold;
+}
+
+@media screen and (min-width: 530px) {
+
+  .header__search{
+    margin: 5% 3%;
   }
-  to {
-    transform: rotate(360deg);
+
+  .search-modal__recommendations{
+    height: 50vh;
   }
+
+}
+
+@media screen and (min-width: 860px) {
+
+  .header{
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-between;
+  }
+
+  .header__search{
+    margin: 0;
+  }
+
+  .search-modal{
+    min-height: 50vh;
+    display: flex;
+    flex-wrap: wrap;
+  }
+
+  .search-modal__header{
+    flex-grow: 0;
+    width: 100%;
+  }
+
+  .search-modal__inputs{
+    margin: 2% 0;
+    border: none;
+    box-shadow: #393939 1px 1px 3px;
+    width: 100%;
+    flex-direction: row;
+    height: fit-content;
+  }
+
+  .search-modal__input-container{
+    margin: 0;
+    padding: 2% 3%;
+    flex-grow: 1;
+  }
+
+  .search-modal__input-container:last-child{
+    padding: 0px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-grow: 1
+  }
+
+  .search-modal__search{
+    border-radius: 10px;
+    background-color: #eb5757;
+    color: #fff;
+    font-weight: bold;
+    letter-spacing: 1px;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    transition: all .1s ease-in;
+    padding: 7%;
+  }
+
+  .search-modal__search:hover{
+    background-color: #d64242;
+  }
+  
+  .search-modal__search:active{
+    outline: none;
+    background-color: #eb5757;
+  }
+
+  .search-modal__input-container:first-child{
+    border: none;
+  }
+
+  .search-modal__recommendations{
+    width: 45%;
+  }
+
+  .search-modal__guests-count{
+    font-size: 1rem;
+    margin: 5% 0;
+  }
+  
+  .search-modal__guests-count-title{
+    font-size: 1.3rem;
+    font-weight: bold;
+    letter-spacing: 1px;
+  }
+  
+  .search-modal__guests-count-definition{
+    font-size: .9rem;
+  }
+  
+  .search-modal__guests-count-inputs{
+    display: flex;
+    align-items: center;
+    margin: 5% 0;
+  }
+  
+  .search-modal__guests-button{
+    font-size: .3rem;
+    border-radius: 10px;
+    border: #393939 1px solid;
+    cursor: pointer;
+  }
+
+  .search-modal__guests-button:hover{
+    transform: scale(1.1);
+  }
+
+  .search-modal__guests-button:active{
+    transform: scale(.9);
+  }
+  
+  .search-modal__guests-count-value{
+    font-size: 1.3rem;
+    margin: 0 1rem;
+  }
+
+  .search-modal__guests{
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    justify-content: flex-start;
+    width: 40%;
+    padding: 1%;
+  }
+
+  .search-modal__footer{
+    display: none;
+  }
+
+  .list{
+    flex-direction: row;
+    flex-wrap: wrap;
+    justify-content: space-around;
+  }
+
+  .list__item{
+    width: 45%;
+    transition: all ease-in .2s;
+  }
+
+  .list__item:hover{
+    transform: scale(1.05);
+  }
+}
+
+@media screen and (min-width: 1170px) {
+
+  .list__item{
+    width: 30%;
+  }
+
+  .search-modal{
+    padding: 1%;
+    min-height: 40vh;
+    max-height: 45vh;
+  }
+
+  .search-modal__recommendations{
+    height: 25vh;
+  }
+
+  .search-modal__inputs{
+    margin: 1%;
+  }
+
+  .search-modal__input-container{
+    padding: 1%;
+  }
+
+  .search-modal__search{
+    padding: 4%;
+  }
+}
+
+@media screen and (min-width: 1380px) {
+
+
 }
