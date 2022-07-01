@@ -22,6 +22,9 @@ const SearchModal = ({filter,  recommendations, modalClass, toggleSearchModal, h
                 </div>
             </div>
             <div className='search-modal__recommendations'>
+                <div className='search-modal__recommendation' onClick={() => filter("", adultGuests+childGuests)}>
+                    <span className='material-icons search-modal__icon'>place</span> All
+                </div>
                 {
                     recommendations.map(stay => {
                         return <Recommendation key={stay.city} stay={stay} filter={filter} adultGuests={adultGuests} childGuests={childGuests} />
